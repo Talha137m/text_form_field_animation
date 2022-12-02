@@ -30,8 +30,6 @@ class _PasswordInputFieldState extends State<PasswordInputField>
     with SingleTickerProviderStateMixin {
   late GlobalKey<FormFieldState> globalKey;
   double width = 0;
-  //padding
-  EdgeInsets paddingAnimation = const EdgeInsets.only(top: 20);
   //make the animation controller data member
   late AnimationController animationController;
   //make the data member of color template type
@@ -100,6 +98,11 @@ class _PasswordInputFieldState extends State<PasswordInputField>
             focusNode: node,
             decoration: const InputDecoration(
               hintText: 'Password',
+              errorStyle: TextStyle(
+                color: Colors.white,
+                backgroundColor: Colors.black,
+                fontSize: 20,
+              ),
             ),
             onChanged: (value) {
               if (value.isNotEmpty) {
@@ -107,7 +110,6 @@ class _PasswordInputFieldState extends State<PasswordInputField>
                   setState(() {
                     bottomAnimationValue = 0;
                     opacityAnimationValue = 1;
-                    paddingAnimation = const EdgeInsets.only(top: 0);
                   });
                   animationController.forward(from: 0);
                 } else {
@@ -115,7 +117,6 @@ class _PasswordInputFieldState extends State<PasswordInputField>
                   setState(() {
                     bottomAnimationValue = 1;
                     opacityAnimationValue = 0;
-                    paddingAnimation = const EdgeInsets.only(top: 22);
                   });
                 }
               } else {
@@ -131,7 +132,7 @@ class _PasswordInputFieldState extends State<PasswordInputField>
             alignment: Alignment.bottomCenter,
             child: AnimatedContainer(
               duration: const Duration(seconds: 3),
-              width: widget.fadePasswordEndValue ? 0 : 300,
+              width: widget.fadePasswordEndValue ? 0 : double.infinity,
               child: TweenAnimationBuilder<double>(
                 curve: Curves.linear,
                 tween: Tween(begin: 0, end: bottomAnimationValue),
